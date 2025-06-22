@@ -197,4 +197,4 @@ cython_debug/
 .vscode
 
 # Project Data
-src/config/settings.json
+src/data/database.db
