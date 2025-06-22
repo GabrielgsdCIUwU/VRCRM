@@ -8,15 +8,13 @@ class Language:
         if cls._instance is None:
             cls._instance = super(Language, cls).__new__(cls)
             cls._instance.settings = Settings()
-            cls._instance.language = cls._instance.settings.get_language()
         return cls._instance
     
     def set_language(self, language):
-        self.language = language
-        self.settings.set_language(language)
+        self._instance.settings.set_language(language)
     
     def get_language(self):
-        return self.language
+        return self._instance.settings.get_language()
     
     def load_translations(self):
         try:
