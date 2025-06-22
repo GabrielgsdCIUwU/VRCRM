@@ -4,7 +4,7 @@ class Settings:
         self.db = Database()
 
     def get_language(self):
-        return self.db.get_setting("language", "en")
+        return self.db.get_setting("language", "English")
     
     def set_language(self, language):
         self.db.set_setting("language", language)
