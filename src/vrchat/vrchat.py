@@ -6,9 +6,20 @@ import os
 
 
 class VRChatAPI:
+    _instance = None
+    _initialized = False
+
+    def __new__(cls, *args, **kwargs):
+        if not cls._instance:
+            cls._instance = super(VRChatAPI, cls).__new__(cls, *args, **kwargs)
+        return cls._instance
+
     BASE_URL = "https://api.vrchat.cloud/api/1"
 
     def __init__(self):
+        if self._initialized:
+            return
+
         self.session = requests.Session()
         self.session.headers.update({
             "User-Agent": "VRCRM/1.0 (ciavatarsvr@gmail.com)"
@@ -17,7 +28,7 @@ class VRChatAPI:
 
         self.session.cookies = cookielib.LWPCookieJar(self.cookie_file)
         self._load_cookies()
-    
+        self._initialized = True
 
     def _load_cookies(self):
         if os.path.exists(self.cookie_file):
