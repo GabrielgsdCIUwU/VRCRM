@@ -198,3 +198,4 @@ cython_debug/
 
 # Project Data
 src/data/database.db
+src/vrchat/cookies.txt
