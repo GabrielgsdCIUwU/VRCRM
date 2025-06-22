@@ -32,7 +32,7 @@ class MainApp:
         self.login_frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
 
     def open_settings(self):
-        SettingsView(self.ventana)
+        SettingsView(self.ventana, custom_tabs=["language"])
     
 
     def iniciar(self):

@@ -5,19 +5,20 @@ import sys
 from translations.language import Language
 
 class SettingsView(tk.Toplevel):
-    def __init__(self, master=None):
+    def __init__(self, master=None, custom_tabs=None):
         super().__init__(master)
         self.lang = Language()
         self.translations = self.lang.load_translations()
         self.title(self.translations["settings"]["title"])
         self.geometry("400x200")
+        self.tabs_list = custom_tabs or ["users", "roles", "profiles", "messages", "language"]
         self.create_widgets()
     
     def create_widgets(self):
         notebook = ttk.Notebook(self)
         self.tabs = {}
 
-        for tab in ["users", "roles", "profiles", "messages", "language"]:
+        for tab in self.tabs_list:
             frame = ttk.Frame(notebook)
             notebook.add(frame, text=self.translations["settings"]["tabs"][tab])
             self.tabs[tab] = frame
