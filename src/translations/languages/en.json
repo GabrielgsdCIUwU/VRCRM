@@ -1,0 +1,22 @@
+{
+  "login": {
+    "title": "Login",
+    "username_label": "User or Email:",
+    "password_label": "Password:",
+    "login_button": "Login",
+    "error_empty_fields": "Please, complete all the fields"
+  },
+  "settings": {
+    "title": "Settings",
+    "tabs": {
+      "users": "Users",
+      "roles": "Roles",
+      "profiles": "Profiles",
+      "messages": "Custom Messages",
+      "language": "Language"
+    },
+    "language_label": "Select language:",
+    "save_button": "Save",
+    "success_message": "Language set to {language}"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "login": {
+    "title": "Inicio de Sesión",
+    "username_label": "Usuario o correo electrónico:",
+    "password_label": "Contraseña:",
+    "login_button": "Iniciar Sesión",
+    "error_empty_fields": "Por favor complete todos los campos"
+  },
+  "settings": {
+    "title": "Ajustes",
+    "tabs": {
+      "users": "Usuarios",
+      "roles": "Roles",
+      "profiles": "Perfiles",
+      "messages": "Mensajes personalizados",
+      "language": "Idioma"
+    },
+    "language_label": "Seleccione idioma:",
+    "save_button": "Guardar",
+    "success_message": "Idioma establecido a {language}"
+  }
+}
