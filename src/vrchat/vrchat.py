@@ -7,7 +7,7 @@ import json
 import websocket
 websocket.enableTrace(False)
 import threading
-from data.db import Database
+from controller.notification import Notification
 
 
 class VRChatAPI:
@@ -124,7 +124,7 @@ class VRChatAPI:
         
         return response.json()
 
-    
+    #region ws
     def connect_pipeline(self, auth_token=None, on_event=None):
         token = auth_token or self._extract_auth_from_cookies()
         url = f"{self.WS_URL}?authToken={token}"
@@ -138,36 +138,11 @@ class VRChatAPI:
                 parsed = content
             
             event_type = outer.get("type")
-            event = {"type": event_type, "content": parsed}
             
-            db = None
-
             if event_type in ["notification", "response-notification", "notification-v2"]:
-                db = Database()
-                print(f"meow notif {event_type}")
-                user_id = None
-                message = None
-                
-                if event_type == "notification":
-                    user_id = parsed.get("senderUserId") or parsed.get("reciverUserId")
-                    # Si el mensaje es un diccionario o contenido complejo, guardarlo tal cual
-                    message = parsed
-                elif event_type == "response-notification":
-                    user_id = parsed.get("receiverId")
-                    message = f"Response to notification {parsed.get('notificationId')}"
-                elif event_type == "notification-v2":
-                    user_id = parsed.get("senderUserId") or parsed.get("receiverUserId")
-                    # Si el mensaje es un diccionario o contenido complejo, guardarlo tal cual
-                    message = parsed
-                
-                if user_id:
-                    db.insert_log(user_id, invitation_type=event_type, message=message)
-                
-                if db:
-                    db.close()
-
-            if on_event:
-                on_event(event)
+               Notification().insert_notification_to_db(notification=parsed)
+               if on_event:
+                    on_event(Notification().get_info_from_notification(notification=parsed))
 
         headers = [
             "User-Agent: VRCRM/1.0 (ciavatarsvr@gmail.com)"

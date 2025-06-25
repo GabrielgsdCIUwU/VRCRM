@@ -18,5 +18,17 @@
     "language_label": "Seleccione idioma:",
     "save_button": "Guardar",
     "success_message": "Idioma establecido a {language}"
+  },
+  "main": {
+    "logs_title": "Registros de actividad",
+    "logs_button": "Actualizar registros",
+    "users_title": "Usuarios conectados",
+    "column_name": "Nombre",
+    "column_invitation_type": "Tipo de invitación",
+    "column_time": "Hora",
+    "column_details": "Detalles",
+    "logs_per_page": "Registros por página:",
+    "prev": "Anterior",
+    "next": "Siguiente"
   }
 }
