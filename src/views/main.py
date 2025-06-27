@@ -3,6 +3,7 @@ from tkinter import ttk
 from views.settings import SettingsView
 from translations.language import Language
 from data.db import Database
+from controller.notification import Notification
 
 class MainView:
     def __init__(self, parent):
@@ -101,10 +102,12 @@ class MainView:
     
     def add_log_entry(self, log: dict):
         if self.current_page == 0:
-            sender_user_name = log.get("username")
-            invitation_type = log.get("type")
-            notification_time = log.get("date")
-            message = log.get("message")
+            notification = Notification().get_info_from_notification(log)
+            sender_user_name = notification.get("username")
+            invitation_type = notification.get("type")
+            notification_time = notification.get("date")
+            message = notification.get("message")
+            
             self.tree.insert("", 0, values=(sender_user_name, invitation_type, notification_time, message))
             if len(self.tree.get_children()) > self.page_size.get():
                 last = self.tree.get_children()[-1]
