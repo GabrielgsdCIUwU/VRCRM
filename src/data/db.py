@@ -57,7 +57,7 @@ class Database:
             CREATE TABLE IF NOT EXISTS logs (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 user_id TEXT NOT NULL,
-                invitation_type TEXT NOT NULL,
+                invitation_type TEXT NOT NULL CHECK(invitation_type IN ('invite', 'inviteResponse', 'requestInvite')),
                 timestamp DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 message TEXT,
                 FOREIGN KEY(user_id) REFERENCES users(id)
