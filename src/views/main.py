@@ -3,7 +3,9 @@ from tkinter import ttk
 from views.settings import SettingsView
 from translations.language import Language
 from data.db import Database
-from controller.notification import Notification
+from datetime import datetime
+from zoneinfo import ZoneInfo
+import tzlocal
 
 class MainView:
     def __init__(self, parent):
@@ -102,13 +104,14 @@ class MainView:
     
     def add_log_entry(self, log: dict):
         if self.current_page == 0:
-            notification = Notification().get_info_from_notification(log)
-            sender_user_name = notification.get("username")
-            invitation_type = notification.get("type")
-            notification_time = notification.get("date")
-            message = notification.get("message")
+            sender_user_name = log.get("username")
+            invitation_type = log.get("type")
+            notification_time = self.to_local_time(log.get("date"))
+            message = log.get("message")
+
+            translated_invitation_type = self.translations["invite"][f"type_{invitation_type}"]
             
-            self.tree.insert("", 0, values=(sender_user_name, invitation_type, notification_time, message))
+            self.tree.insert("", 0, values=(sender_user_name, translated_invitation_type, notification_time, message))
             if len(self.tree.get_children()) > self.page_size.get():
                 last = self.tree.get_children()[-1]
                 self.tree.delete(last)
@@ -117,7 +120,10 @@ class MainView:
         for row in self.tree.get_children():
             self.tree.delete(row)
         for log in logs:
-            self.tree.insert("", "end", values=log)
+            username, invitation_type, timestamp, message = log
+            local_time = self.to_local_time(timestamp)
+            type_invite_translated = self.translations["invite"][f"type_{invitation_type}"]
+            self.tree.insert("", "end", values=(username, type_invite_translated, local_time, message))
     
     def change_page(self, page_number):
         self.current_page = page_number
@@ -137,4 +143,14 @@ class MainView:
     
     def get_frame(self):
         return self.frame
+    
+    def to_local_time(self, timestamp_str):
+        try:
+            utc_dt = datetime.fromisoformat(timestamp_str).replace(tzinfo=ZoneInfo("UTC"))
+            local_zone = tzlocal.get_localzone()
+            local_dt = utc_dt.astimezone(local_zone)
+            return local_dt.strftime("%d/%m/%Y %H:%M:%S")
+        except Exception as e:
+            print(f"Error parsing timestamp: {e}")
+            return timestamp_str
 
