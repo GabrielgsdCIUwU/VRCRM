@@ -30,5 +30,10 @@
     "logs_per_page": "Logs per page:",
     "prev": "Previous",
     "next": "Next"
+  },
+  "invite": {
+    "type_invite": "Invite",
+    "type_inviteResponse": "Invite Response",
+    "type_requestInvite": "Request Invite"
   }
 }
