@@ -4,7 +4,10 @@
     "username_label": "Usuario o correo electrónico:",
     "password_label": "Contraseña:",
     "login_button": "Iniciar Sesión",
-    "error_empty_fields": "Por favor complete todos los campos"
+    "error_empty_fields": "Por favor complete todos los campos",
+    "two_factor": "Verificación de 2 pasos",
+    "login_error": "Se ha producido un error",
+    "login_success": "Se ha logeado correctamente"
   },
   "settings": {
     "title": "Ajustes",

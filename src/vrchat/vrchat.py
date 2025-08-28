@@ -66,13 +66,15 @@ class VRChatAPI:
         return self.user_id
 
     def login(self, username, password, totp_code=None):
+        
+        if totp_code:
+            # Si ya tenemos el código TOTP, completamos el flujo 2FA directamente
+            return self._complete_totp(totp_code)
+        
         logged_in, user_data = self.is_logged_in()
         if logged_in:
             return user_data
 
-        if totp_code:
-            # Si ya tenemos el código TOTP, completamos el flujo 2FA directamente
-            return self._complete_totp(totp_code)
         
         headers = self._build_auth_header(username, password)
         url = f"{self.BASE_URL}/auth/user"

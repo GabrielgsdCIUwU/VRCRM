@@ -4,7 +4,10 @@
     "username_label": "User or Email:",
     "password_label": "Password:",
     "login_button": "Login",
-    "error_empty_fields": "Please, complete all the fields"
+    "error_empty_fields": "Please complete all fields",
+    "two_factor": "Two-factor authentication",
+    "login_error": "An error has occurred",
+    "login_success": "Login successful"
   },
   "settings": {
     "title": "Settings",

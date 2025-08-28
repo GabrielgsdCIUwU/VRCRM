@@ -77,7 +77,9 @@ class Login:
 
     def ask_2fa_code(self):
         popup = tk.Toplevel(self.parent)
-        popup.title(f"{self.translations["login"]["two_factor"]}").grid(row=0, column=0, padx=10, pady=10)
+        popup.title(f"{self.translations["login"]["two_factor"]}")
+        label = ttk.Label(popup, text=self.translations["login"]["two_factor"])
+        label.grid(row=0, column=0, padx=10, pady=10)
         code_var =tk.StringVar()
         entry = ttk.Entry(popup, textvariable=code_var)
         entry.grid(row=1, column=0, padx=10, pady=5)
