@@ -1,5 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
+from vrchat.vrchat import VRChatAPI
+from translations.language import Language as lg
 
 class Login:
     def __init__(self, parent):
@@ -8,7 +10,6 @@ class Login:
         self.frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
        
         # Cargar traducciones
-        from translations.language import Language as lg
         self.translations = lg().load_translations()
 
         # Variables para los campos de entrada
@@ -57,6 +58,41 @@ class Login:
                 self.translations["login"]["error_empty_fields"]
             )
             return
+        
+        api = VRChatAPI()
+
+        try:
+            result = api.login(username, password)
+
+            if "requiresTwoFactorAuth" in result: # type: ignore
+                code = self.ask_2fa_code()
+                if not code:
+                    return
+                result = api.login(username, password, totp_code=code)
+            
+            display_name = result.get("displayName", username)
+            messagebox.showinfo("Login", self.translations["login"]["login_success"].format(display_name))
+        except Exception as e:
+            messagebox.showerror("Error", f"{self.translations["login"]["login_error"]} {str(e)}")
+
+    def ask_2fa_code(self):
+        popup = tk.Toplevel(self.parent)
+        popup.title(f"{self.translations["login"]["two_factor"]}")
+        label = ttk.Label(popup, text=self.translations["login"]["two_factor"])
+        label.grid(row=0, column=0, padx=10, pady=10)
+        code_var =tk.StringVar()
+        entry = ttk.Entry(popup, textvariable=code_var)
+        entry.grid(row=1, column=0, padx=10, pady=5)
+        entry.focus()
+        
+        def submit():
+            popup.destroy()
+        
+        ttk.Button(popup, text="Submit", command=submit).grid(row=2, column=0, pady=10)
+        popup.grab_set()
+        self.parent.wait_window(popup)
+
+        return code_var.get().strip()
 
     def get_frame(self):
         return self.frame

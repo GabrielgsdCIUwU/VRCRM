@@ -21,5 +21,22 @@
     "language_label": "Select language:",
     "save_button": "Save",
     "success_message": "Language set to {language}"
+  },
+  "main": {
+    "logs_title": "Activity Logs",
+    "logs_button": "Update Logs",
+    "users_title": "Connected Users",
+    "column_name": "Name",
+    "column_invitation_type": "Invitation Type",
+    "column_time": "Time",
+    "column_details": "Details",
+    "logs_per_page": "Logs per page:",
+    "prev": "Previous",
+    "next": "Next"
+  },
+  "invite": {
+    "type_invite": "Invite",
+    "type_inviteResponse": "Invite Response",
+    "type_requestInvite": "Request Invite"
   }
 }
